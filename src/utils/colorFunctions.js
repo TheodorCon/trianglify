@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import memoize from "../memoize"
 // Built in color functions provided for your convenience.
 //
 // Usage example:
@@ -16,8 +17,8 @@ import chroma from 'chroma-js'
 // axis. This is the default Trianglify color function.
 // The bias parameter controls how prevalent the y axis is versus the x axis
 export const interpolateLinear = (bias = 0.5) =>
-  ({ xPercent, yPercent, xScale, yScale, opts }) =>
-    chroma.mix(xScale(xPercent), yScale(yPercent), bias, opts.colorSpace)
+  memoize(({ xPercent, yPercent, xScale, yScale, opts }) =>
+    chroma.mix(xScale(xPercent), yScale(yPercent), bias, opts.colorSpace))
 
 // Give the pattern a 'sparkle' effect by introducing random noise into the
 // x and y gradients, making for higher contrast between cells.
